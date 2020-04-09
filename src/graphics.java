@@ -98,12 +98,12 @@ public class Graphics extends Canvas implements Runnable {
 
         for (int i = 0 ; i < square1.getHeight() ; i++) {
             for (int j = 0 ; j < square1.getWidth() ; j++) {
-                pixels[(y+i)*width + x+j] = square2.getPixels()[i*square2.getWidth()+j];
+                pixels[(y+i)*width + x+j] = square1.getPixels()[i*square1.getWidth()+j];
             }
         }
 
         // The moving magenta square
-        if (xSquare1 + vxSquare1 < 0 || xSquare1 + vxSquare1 > width - square1.getWidth())
+        /*if (xSquare1 + vxSquare1 < 0 || xSquare1 + vxSquare1 > width - square1.getWidth())
             vxSquare1 = 0;
         if (ySquare1 + vySquare1 < 0 || ySquare1 + vySquare1 > height - square1.getHeight())
             vySquare1 = 0;
@@ -115,7 +115,7 @@ public class Graphics extends Canvas implements Runnable {
             for (int j = 0 ; j < square1.getWidth() ; j++) {
                 pixels[(ySquare1+i)*width + xSquare1+j] = square1.getPixels()[i*square1.getWidth()+j];
             }
-        }
+        }*/
     }
 
     public synchronized void start() {
@@ -170,12 +170,16 @@ public class Graphics extends Canvas implements Runnable {
         public void keyPressed(KeyEvent keyEvent) {
             if (keyEvent.getKeyChar()=='a') {
                 vx = -2;
+                vy = 0;
             } else if (keyEvent.getKeyChar()=='d') {
                 vx = 2;
+                vy = 0;
             } else if (keyEvent.getKeyChar()=='w') {
                 vy = -2;
+                vx = 0;
             } else if (keyEvent.getKeyChar()=='s') {
                 vy = 2;
+                vx = 0;
             }
         }
 
