@@ -101,7 +101,6 @@ public class Graphics extends Canvas implements Runnable {
         y1 += vy;
 
         if (x1 >= width-square2.getWidth() ||  x1 == 0) {
-
             running = false;
         }
         if (y1 >= height-square2.getHeight() || y1 == 0){
@@ -202,7 +201,7 @@ public class Graphics extends Canvas implements Runnable {
 
     public void spawn(){
         x1 = width/2;
-        y1 = width/2;
+        y1 = height/2;
     }
 }
 
