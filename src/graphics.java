@@ -21,8 +21,12 @@ public class Graphics extends Canvas implements Runnable {
 
     int vx = 2;
     int vy = 0;
-    int x;
-    int y;
+    int x1;
+    int y1;
+    int y2;
+    int x2;
+
+    int snakeL;
 
     private JFrame frame;
     private BufferedImage image;
@@ -66,7 +70,7 @@ public class Graphics extends Canvas implements Runnable {
         this.requestFocus();
 
         square1 = new Sprite(16,16,0xFF00FF);
-        square2 = new Sprite(32,8,0x00FF00);
+        square2 = new Sprite(16,16,0x00FF00);
     }
 
     private void draw() {
@@ -93,29 +97,31 @@ public class Graphics extends Canvas implements Runnable {
            each timestep.
         */
 
-        x += vx;
-        y += vy;
+        x1 += vx;
+        y1 += vy;
 
-        for (int i = 0 ; i < square1.getHeight() ; i++) {
-            for (int j = 0 ; j < square1.getWidth() ; j++) {
-                pixels[(y+i)*width + x+j] = square1.getPixels()[i*square1.getWidth()+j];
+        if (x1 >= width-square2.getWidth() ||  x1 == 0) {
+
+            running = false;
+        }
+        if (y1 >= height-square2.getHeight() || y1 == 0){
+            running = false;
+        }
+
+        if (vy == 0) {
+            for (int i = 0; i < square1.getHeight(); i++) {
+                for (int j = 0; j < square1.getWidth(); j++) {
+                    pixels[(y1 + i) * width + x1 + j] = square1.getPixels()[i * square1.getWidth() + j];
+                }
+            }
+        } else {
+            for (int i = 0; i < square1.getHeight(); i++) {
+                for (int j = 0; j < square1.getWidth(); j++) {
+                    pixels[(y1 + i) * width + x1 + j] = square1.getPixels()[i * square1.getWidth() + j];
+                }
             }
         }
 
-        // The moving magenta square
-        /*if (xSquare1 + vxSquare1 < 0 || xSquare1 + vxSquare1 > width - square1.getWidth())
-            vxSquare1 = 0;
-        if (ySquare1 + vySquare1 < 0 || ySquare1 + vySquare1 > height - square1.getHeight())
-            vySquare1 = 0;
-
-        xSquare1 += vxSquare1;
-        ySquare1 += vySquare1;
-
-        for (int i = 0 ; i < square1.getHeight() ; i++) {
-            for (int j = 0 ; j < square1.getWidth() ; j++) {
-                pixels[(ySquare1+i)*width + xSquare1+j] = square1.getPixels()[i*square1.getWidth()+j];
-            }
-        }*/
     }
 
     public synchronized void start() {
@@ -140,6 +146,7 @@ public class Graphics extends Canvas implements Runnable {
         double deltaFrame = 0;
         double deltaUpdate = 0;
         long lastTime = System.nanoTime();
+        spawn();
 
         while (running) {
             long now = System.nanoTime();
@@ -191,6 +198,11 @@ public class Graphics extends Canvas implements Runnable {
                 vySquare1 = 0;
             }
         }
+    }
+
+    public void spawn(){
+        x1 = width/2;
+        y1 = width/2;
     }
 }
 
