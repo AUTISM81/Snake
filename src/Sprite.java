@@ -66,4 +66,6 @@ public class Sprite {
             pixels[i] = color;
         }
     }
+
+
 }
