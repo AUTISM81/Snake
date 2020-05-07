@@ -2,12 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.Random;
+import java.util.ArrayList;
 
 /**
  * This is a class
@@ -22,12 +20,13 @@ public class Graphics extends Canvas implements Runnable {
 
     int vx = 0;
     int vy = 0;
-    int x1;
-    int y1;
+    ArrayList x1 = new ArrayList(10);
+    ArrayList y1 = new ArrayList(10);
     int y2;
     int x2;
 
-    int snake_head = 8;
+
+    int length = 0;
 
     private JFrame frame;
     private BufferedImage image;
@@ -39,15 +38,14 @@ public class Graphics extends Canvas implements Runnable {
     private int fps = 1;
     private int ups = 1;
 
-    private Sprite square1;
-    private Sprite square2;
+    private Sprite snake_head;
+    private Sprite Fruit;
+    private Sprite snake_body;
 
     public Graphics(int w, int h, int scale) {
         this.width = w;
         this.height = h;
         this.scale = scale;
-
-        int[][] grid = new int[16][16];
 
         image = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -64,13 +62,15 @@ public class Graphics extends Canvas implements Runnable {
         this.addKeyListener(new MyKeyListener());
         this.requestFocus();
 
-        square1 = new Sprite(16,16,0xFF00FF);
-        square2 = new Sprite(16,16,0x00FF00);
-
-        x2 = (int) (Math.random() * width);
-        y2 = (int) (Math.random() * height);
+        Fruit = new Sprite(16,16,0xFFFFFF);
+        snake_head = new Sprite(16,16,0xFF00FF);
+        snake_body = new Sprite(16,16,0xFF00FF);
 
 
+        int rand = random();
+
+        x2 = (int) (width-(rand* snake_head.getWidth()));
+        y2 = (int) (height-(rand* snake_head.getHeight()));
     }
 
     private void draw() {
@@ -97,40 +97,65 @@ public class Graphics extends Canvas implements Runnable {
            each timestep.
         */
 
+        int x = (int) x1.get(0);
+        int y = (int) y1.get(0);
+
+        if (x2 == x && y2 == y) {
+            int rand = random();
+
+            x2 = (int) (width-(rand* snake_head.getWidth()));
+            y2 = (int) (height-(rand* snake_head.getHeight()));
+
+            length++;
+        }
+
+        if (x2 >= width- Fruit.getWidth() ||  x2 == 0){
+            running = false;
+        }
+        if (y2 >= height- Fruit.getHeight() || y2 == 0){
+            running = false;
+        }
+
+        for (int i = 0; i < Fruit.getHeight(); i++) {
+            for (int j = 0; j < Fruit.getWidth(); j++) {
+                pixels[(y2 + i) * width + x2 + j] = Fruit.getPixels()[i * Fruit.getWidth() + j];
+            }
+        }
+
+        if (length >= 1) {
+            for (int i = 0; i < length; i++){
+                y1.add(y - (snake_head.getHeight()*i));
+                x1.add(x - (snake_head.getWidth()*i));
+                for (int j = 0; j < snake_body.getHeight(); j++) {
+                    for (int q = 0; q < snake_body.getWidth(); q++) {
+                        pixels[(y3[i] + j) * width + x3[i] + q] = snake_head.getPixels()[j * snake_head.getWidth() + q];
+                    }
+                }
+            }
+        }
+
+
         x1 += vx;
         y1 += vy;
 
-        if (x1 >= width-square2.getWidth() ||  x1 == 0) {
+        if (x1 >= width- Fruit.getWidth() ||  x1 == 0) {
             vx *= -1;
         }
-        if (y1 >= height-square2.getHeight() || y1 == 0){
+        if (y1 >= height- Fruit.getHeight() || y1 == 0){
             vy *= -1;
         }
 
         if (vy == 0) {
-            for (int i = 0; i < square1.getHeight(); i++) {
-                for (int j = 0; j < square1.getWidth(); j++) {
-                    pixels[(y1 + i) * width + x1 + j] = square1.getPixels()[i * square1.getWidth() + j];
+            for (int i = 0; i < snake_head.getHeight(); i++) {
+                for (int j = 0; j < snake_head.getWidth(); j++) {
+                    pixels[(y1 + i) * width + x1 + j] = snake_head.getPixels()[i * snake_head.getWidth() + j];
                 }
             }
         } else {
-            for (int i = 0; i < square1.getHeight(); i++) {
-                for (int j = 0; j < square1.getWidth(); j++) {
-                    pixels[(y1 + i) * width + x1 + j] = square1.getPixels()[i * square1.getWidth() + j];
+            for (int i = 0; i < snake_head.getHeight(); i++) {
+                for (int j = 0; j < snake_head.getWidth(); j++) {
+                    pixels[(y1 + i) * width + x1 + j] = snake_head.getPixels()[i * snake_head.getWidth() + j];
                 }
-            }
-        }
-
-        if (x2 >= width-square2.getWidth() ||  x2 == 0) {
-            running = false;
-        }
-        if (y2 >= height-square2.getHeight() || y2 == 0){
-            running = false;
-        }
-
-        for (int i = 0; i < square2.getHeight(); i++) {
-            for (int j = 0; j < square2.getWidth(); j++) {
-                pixels[(y2 + i) * width + x2 + j] = square2.getPixels()[i * square2.getWidth() + j];
             }
         }
     }
@@ -187,16 +212,16 @@ public class Graphics extends Canvas implements Runnable {
         @Override
         public void keyPressed(KeyEvent keyEvent) {
             if (keyEvent.getKeyChar()=='a') {
-                vx = -square2.getWidth();
+                vx = -snake_head.getWidth();
                 vy = 0;
             } else if (keyEvent.getKeyChar()=='d') {
-                vx = square2.getWidth();
+                vx = snake_head.getWidth();
                 vy = 0;
             } else if (keyEvent.getKeyChar()=='w') {
-                vy = -square2.getHeight();
+                vy = -snake_head.getHeight();
                 vx = 0;
             } else if (keyEvent.getKeyChar()=='s') {
-                vy = square2.getHeight();
+                vy = snake_head.getHeight();
                 vx = 0;
             }
         }
@@ -212,8 +237,14 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     public void spawn(){
-        x1 = width/2;
-        y1 = height/2;
+        int rand = random();
+        x1.add(width- snake_head.getWidth()*rand);
+        y1.add(height- snake_head.getHeight()*rand);
+    }
+
+    public static int random(){
+        int rand = (int) (Math.random()*9+1);
+        return rand;
     }
 }
 
