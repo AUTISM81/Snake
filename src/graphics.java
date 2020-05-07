@@ -20,8 +20,8 @@ public class Graphics extends Canvas implements Runnable {
 
     int vx = 0;
     int vy = 0;
-    ArrayList x1 = new ArrayList(10);
-    ArrayList y1 = new ArrayList(10);
+    ArrayList <Integer> x1 = new ArrayList(10);
+    ArrayList <Integer> y1 = new ArrayList(10);
     int y2;
     int x2;
 
@@ -97,10 +97,7 @@ public class Graphics extends Canvas implements Runnable {
            each timestep.
         */
 
-        int x = (int) x1.get(0);
-        int y = (int) y1.get(0);
-
-        if (x2 == x && y2 == y) {
+        if (x2 == x1.get(0) && y2 == y1.get(0)) {
             int rand = random();
 
             x2 = (int) (width-(rand* snake_head.getWidth()));
@@ -124,37 +121,42 @@ public class Graphics extends Canvas implements Runnable {
 
         if (length >= 1) {
             for (int i = 0; i < length; i++){
-                y1.add(y - (snake_head.getHeight()*i));
-                x1.add(x - (snake_head.getWidth()*i));
+                if (vx > vy) {
+                    x1.add(x1.get(0) - (snake_head.getWidth()*i));
+                } else {
+                    y1.add(y1.get(0) - (snake_head.getHeight()*i));
+                }
+
                 for (int j = 0; j < snake_body.getHeight(); j++) {
                     for (int q = 0; q < snake_body.getWidth(); q++) {
-                        pixels[(y3[i] + j) * width + x3[i] + q] = snake_head.getPixels()[j * snake_head.getWidth() + q];
+                        pixels[(y1.get(1) + j) * width + x1.get(1) + q] = snake_head.getPixels()[j * snake_head.getWidth() + q];
                     }
                 }
             }
         }
 
 
-        x1 += vx;
-        y1 += vy;
+        x1.set(0, +vx);
+        y1.set(0, +vy);
 
-        if (x1 >= width- Fruit.getWidth() ||  x1 == 0) {
+        if (x1.get(0) >= width- Fruit.getWidth() ||  x1.get(0) == 0) {
             vx *= -1;
         }
-        if (y1 >= height- Fruit.getHeight() || y1 == 0){
+        if (y1.get(0) >= height- Fruit.getHeight() || y1.get(0) == 0){
             vy *= -1;
         }
 
+        //förmodligen fel här
         if (vy == 0) {
             for (int i = 0; i < snake_head.getHeight(); i++) {
                 for (int j = 0; j < snake_head.getWidth(); j++) {
-                    pixels[(y1 + i) * width + x1 + j] = snake_head.getPixels()[i * snake_head.getWidth() + j];
+                    pixels[(y1.get(0) + i) * width + x1.get(0) + j] = snake_head.getPixels()[i * snake_head.getWidth() + j];
                 }
             }
         } else {
             for (int i = 0; i < snake_head.getHeight(); i++) {
                 for (int j = 0; j < snake_head.getWidth(); j++) {
-                    pixels[(y1 + i) * width + x1 + j] = snake_head.getPixels()[i * snake_head.getWidth() + j];
+                    pixels[(y1.get(0) + i) * width + x1.get(0) + j] = snake_head.getPixels()[i * snake_head.getWidth() + j];
                 }
             }
         }
