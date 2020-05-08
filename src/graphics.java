@@ -20,8 +20,8 @@ public class Graphics extends Canvas implements Runnable {
 
     int vx = 0;
     int vy = 0;
-    ArrayList <Integer> x1 = new ArrayList(10);
-    ArrayList <Integer> y1 = new ArrayList(10);
+    ArrayList <Integer> x1 = new ArrayList<Integer>(10);
+    ArrayList <Integer> y1 = new ArrayList<Integer>(10);
     int y2;
     int x2;
 
@@ -111,6 +111,7 @@ public class Graphics extends Canvas implements Runnable {
         }
         if (y2 >= height- Fruit.getHeight() || y2 == 0){
             running = false;
+            //hejsan
         }
 
         for (int i = 0; i < Fruit.getHeight(); i++) {
@@ -120,11 +121,12 @@ public class Graphics extends Canvas implements Runnable {
         }
 
         if (length >= 1) {
-            for (int i = 0; i < length; i++){
+            for (int i = 0; i <= length; i++){
                 if (vx > vy) {
-                    x1.add(x1.get(0) - (snake_head.getWidth()*i));
+
+                    x1.set(i, x1.get(0) - (snake_head.getWidth()*i));
                 } else {
-                    y1.add(y1.get(0) - (snake_head.getHeight()*i));
+                    y1.set(i, y1.get(0) - (snake_head.getHeight()*i));
                 }
 
                 for (int j = 0; j < snake_body.getHeight(); j++) {
@@ -136,8 +138,8 @@ public class Graphics extends Canvas implements Runnable {
         }
 
 
-        x1.set(0, +vx);
-        y1.set(0, +vy);
+        x1.set(0, x1.get(0) +vx);
+        y1.set(0, y1.get(0) + vy);
 
         if (x1.get(0) >= width- Fruit.getWidth() ||  x1.get(0) == 0) {
             vx *= -1;
