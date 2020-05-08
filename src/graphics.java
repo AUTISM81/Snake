@@ -97,21 +97,12 @@ public class Graphics extends Canvas implements Runnable {
            each timestep.
         */
 
-        if (x2 == x1.get(0) && y2 == y1.get(0)) {
-            int rand = random();
-
-            x2 = (int) (width-(rand* snake_head.getWidth()));
-            y2 = (int) (height-(rand* snake_head.getHeight()));
-
-            length++;
-        }
 
         if (x2 >= width- Fruit.getWidth() ||  x2 == 0){
             running = false;
         }
         if (y2 >= height- Fruit.getHeight() || y2 == 0){
             running = false;
-            //hejsan
         }
 
         for (int i = 0; i < Fruit.getHeight(); i++) {
@@ -121,12 +112,14 @@ public class Graphics extends Canvas implements Runnable {
         }
 
         if (length >= 1) {
-            for (int i = 0; i <= length; i++){
+            int size = x1.size();
+            System.out.println(size);
+            for (int i = size; i >= 0; i--){
+                int pos = i-1;
                 if (vx > vy) {
-
-                    x1.set(i, x1.get(0) - (snake_head.getWidth()*i));
+                    x1.set(i, x1.get(pos));
                 } else {
-                    y1.set(i, y1.get(0) - (snake_head.getHeight()*i));
+                    y1.set(i, y1.get(pos));
                 }
 
                 for (int j = 0; j < snake_body.getHeight(); j++) {
@@ -137,6 +130,19 @@ public class Graphics extends Canvas implements Runnable {
             }
         }
 
+        if (x2 == x1.get(0) && y2 == y1.get(0)) {
+            int rand = random();
+
+            x2 = (int) (width-(rand* snake_head.getWidth()));
+            y2 = (int) (height-(rand* snake_head.getHeight()));
+
+            length++;
+        }
+
+        if (length >= 1) {
+            x1.add(x1.get(0));
+            y1.add(y1.get(0));
+        }
 
         x1.set(0, x1.get(0) +vx);
         y1.set(0, y1.get(0) + vy);

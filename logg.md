@@ -4,4 +4,6 @@
 
 24/4 - 20; Idag har jag jobbat med att fixa att frukten och ormen är upplinade så att det de är perfekt genom att placera frukten jämtmot ormen. Jag har även nu börjat jobba på att frukten flyttas när ormen är på frukten. Nu har jag börjat jobba på att ormens kropp ska växa genom att göra det som en array. Den fungerar inte riktigt än så det blir nästa gångs plan att fixa.
 
-7/5 - 20; Idag har gjort så att hela kroppens kordinater är gjord till en ArrayList men jag har stött på ett problem som gör att jag inte kan flytta min orm mer än ett hopp åt varje håll. Detta gör att jag endast akn vra i ett hörn.__
+7/5 - 20; Idag har gjort så att hela kroppens kordinater är gjord till en ArrayList men jag har stött på ett problem som gör att jag inte kan flytta min orm mer än ett hopp åt varje håll. Detta gör att jag endast akn vra i ett hörn._
+
+8/5 - 20; Idag har fortsatt jobba med hur kroppen ska kunna röra sig. Det jag har nu kommit på är att kroppen kordinater kommer att vara den delen innans tidigare kordinater._
