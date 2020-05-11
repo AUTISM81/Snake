@@ -122,7 +122,7 @@ public class Graphics extends Canvas implements Runnable {
 
                 for (int j = 0; j < snake_body.getHeight(); j++) {
                     for (int q = 0; q < snake_body.getWidth(); q++) {
-                        pixels[(y1.get(1) + j) * width + x1.get(1) + q] = snake_head.getPixels()[j * snake_head.getWidth() + q];
+                        pixels[(y1.get(i) + j) * width + x1.get(i) + q] = snake_head.getPixels()[j * snake_head.getWidth() + q];
                     }
                 }
             }
@@ -135,6 +135,7 @@ public class Graphics extends Canvas implements Runnable {
             y2 = (int) (height-(rand* snake_head.getHeight()));
 
             length++;
+
             x1.add(x1.get(0));
             y1.add(y1.get(0));
         }
