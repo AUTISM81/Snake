@@ -135,15 +135,12 @@ public class Graphics extends Canvas implements Runnable {
             y2 = (int) (height-(rand* snake_head.getHeight()));
 
             length++;
-        }
-
-        if (length >= 2) {
             x1.add(x1.get(0));
             y1.add(y1.get(0));
         }
 
         x1.set(0, x1.get(0) +vx);
-        y1.set(0, y1.get(0) + vy);
+        y1.set(0, y1.get(0) +vy);
 
         if (x1.get(0) >= width- Fruit.getWidth() ||  x1.get(0) == 0) {
             vx *= -1;
@@ -152,7 +149,6 @@ public class Graphics extends Canvas implements Runnable {
             vy *= -1;
         }
 
-        //förmodligen fel här
         if (vy == 0) {
             for (int i = 0; i < snake_head.getHeight(); i++) {
                 for (int j = 0; j < snake_head.getWidth(); j++) {
