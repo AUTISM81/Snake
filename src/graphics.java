@@ -26,7 +26,7 @@ public class Graphics extends Canvas implements Runnable {
     int x2;
 
 
-    int length = 0;
+    int length;
 
     private JFrame frame;
     private BufferedImage image;
@@ -90,6 +90,8 @@ public class Graphics extends Canvas implements Runnable {
         for (int i = 0 ; i < pixels.length ; i++) {
             pixels[i] = 0;
         }
+
+        length = x1.size();
         // The mario sprite
 
         /* Parametric curve (a circle) see https://en.wikipedia.org/wiki/Parametric_equation
@@ -111,16 +113,12 @@ public class Graphics extends Canvas implements Runnable {
             }
         }
 
-        if (length >= 1) {
-            int size = x1.size();
-            System.out.println(size);
-            for (int i = size; i >= 0; i--){
-                int pos = i-1;
-                if (vx > vy) {
-                    x1.set(i, x1.get(pos));
-                } else {
-                    y1.set(i, y1.get(pos));
-                }
+        if (length >= 2) {
+            System.out.println(x1.size());
+            for (int i = x1.size(); i >= 1;){
+                i--;
+                    x1.set(i, x1.get(i));
+                    y1.set(i, y1.get(i));
 
                 for (int j = 0; j < snake_body.getHeight(); j++) {
                     for (int q = 0; q < snake_body.getWidth(); q++) {
@@ -139,7 +137,7 @@ public class Graphics extends Canvas implements Runnable {
             length++;
         }
 
-        if (length >= 1) {
+        if (length >= 2) {
             x1.add(x1.get(0));
             y1.add(y1.get(0));
         }

@@ -6,4 +6,4 @@
 
 7/5 - 20; Idag har gjort så att hela kroppens kordinater är gjord till en ArrayList men jag har stött på ett problem som gör att jag inte kan flytta min orm mer än ett hopp åt varje håll. Detta gör att jag endast akn vra i ett hörn._
 
-8/5 - 20; Idag har fortsatt jobba med hur kroppen ska kunna röra sig. Det jag har nu kommit på är att kroppen kordinater kommer att vara den delen innans tidigare kordinater._
+8/5 - 20; Idag har fortsatt jobba med hur kroppen ska kunna röra sig. Det jag har nu kommit på är att kroppen kordinater kommer att vara den delen innans tidigare kordinater.
