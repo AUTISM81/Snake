@@ -2,8 +2,8 @@ This will be a very snake inspired game. It will work the same a lot but I will 
 
 TODO
 1. I will start of by making the controles for the snake. Done
-1.5 I will be doing the basics for the snake movement. in progress
-2. I will make the fruits the snake will eat to become longer.
+1.5 I will be doing the basics for the snake movement. Done
+2. I will make the fruits the snake will eat to become longer. Done
 3. I will make the snake lose if it hits itself.
 4. I will create a point system.
 

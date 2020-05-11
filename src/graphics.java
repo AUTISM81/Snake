@@ -27,6 +27,7 @@ public class Graphics extends Canvas implements Runnable {
 
 
     int length;
+    int lengthcheck;
 
     private JFrame frame;
     private BufferedImage image;
@@ -35,8 +36,8 @@ public class Graphics extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean running = false;
-    private int fps = 1;
-    private int ups = 1;
+    private int fps = 2;
+    private int ups = 2;
 
     private Sprite snake_head;
     private Sprite Fruit;
@@ -107,18 +108,33 @@ public class Graphics extends Canvas implements Runnable {
             running = false;
         }
 
+        if (x2 == x1.get(0) && y2 == y1.get(0)) {
+            int rand = random();
+
+            x2 = (int) (width-(rand* snake_head.getWidth()));
+            y2 = (int) (height-(rand* snake_head.getHeight()));
+
+            lengthcheck = length+1;
+
+            x1.add(x1.get(0));
+            y1.add(y1.get(0));
+        }
+
         for (int i = 0; i < Fruit.getHeight(); i++) {
             for (int j = 0; j < Fruit.getWidth(); j++) {
                 pixels[(y2 + i) * width + x2 + j] = Fruit.getPixels()[i * Fruit.getWidth() + j];
             }
         }
 
+
+
         if (length >= 2) {
             System.out.println(x1.size());
-            for (int i = x1.size(); i >= 1;){
-                i--;
-                    x1.set(i, x1.get(i));
-                    y1.set(i, y1.get(i));
+            int size = x1.size();
+            for (int i = x1.size()-1; i >= 1; i--){
+                System.out.println(i);
+                    x1.set(i, x1.get(i-1));
+                    y1.set(i, y1.get(i-1));
 
                 for (int j = 0; j < snake_body.getHeight(); j++) {
                     for (int q = 0; q < snake_body.getWidth(); q++) {
@@ -128,26 +144,17 @@ public class Graphics extends Canvas implements Runnable {
             }
         }
 
-        if (x2 == x1.get(0) && y2 == y1.get(0)) {
-            int rand = random();
-
-            x2 = (int) (width-(rand* snake_head.getWidth()));
-            y2 = (int) (height-(rand* snake_head.getHeight()));
-
+        if (lengthcheck > length)
             length++;
-
-            x1.add(x1.get(0));
-            y1.add(y1.get(0));
-        }
 
         x1.set(0, x1.get(0) +vx);
         y1.set(0, y1.get(0) +vy);
 
-        if (x1.get(0) >= width- Fruit.getWidth() ||  x1.get(0) == 0) {
-            vx *= -1;
+        if (x1.get(0) >= width ||  x1.get(0) == 0) {
+            stop();
         }
-        if (y1.get(0) >= height- Fruit.getHeight() || y1.get(0) == 0){
-            vy *= -1;
+        if (y1.get(0) >= height || y1.get(0) == 0){
+            stop();
         }
 
         if (vy == 0) {
