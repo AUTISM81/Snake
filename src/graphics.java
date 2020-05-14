@@ -65,7 +65,7 @@ public class Graphics extends Canvas implements Runnable {
 
         Fruit = new Sprite(16,16,0xFFFFFF);
         snake_head = new Sprite(16,16,0xFF00FF);
-        snake_body = new Sprite(16,16,0xFF00FF);
+        snake_body = new Sprite(16,16,0x00FF00);
 
 
         int rand = random();
@@ -101,23 +101,21 @@ public class Graphics extends Canvas implements Runnable {
         */
 
 
-        if (x2 >= width- Fruit.getWidth() ||  x2 == 0){
-            running = false;
-        }
-        if (y2 >= height- Fruit.getHeight() || y2 == 0){
-            running = false;
-        }
 
         if (x2 == x1.get(0) && y2 == y1.get(0)) {
-            int rand = random();
-
-            x2 = (int) (width-(rand* snake_head.getWidth()));
-            y2 = (int) (height-(rand* snake_head.getHeight()));
+            fruitpos();
 
             lengthcheck = length+1;
 
             x1.add(x1.get(0));
             y1.add(y1.get(0));
+        }
+
+        while (x2 >= width- Fruit.getWidth() ||  x2 <= 0){
+            fruitpos();
+        }
+        while (y2 >= height- Fruit.getHeight() || y2 <= 0){
+            fruitpos();
         }
 
         for (int i = 0; i < Fruit.getHeight(); i++) {
@@ -170,6 +168,8 @@ public class Graphics extends Canvas implements Runnable {
                 }
             }
         }
+
+        snakecrash();
     }
 
     public synchronized void start() {
@@ -250,13 +250,61 @@ public class Graphics extends Canvas implements Runnable {
 
     public void spawn(){
         int rand = random();
-        x1.add(width- snake_head.getWidth()*rand);
-        y1.add(height- snake_head.getHeight()*rand);
+        int rand2 = random()-2;
+
+        if (rand2 < 2){
+            x1.add( width-(rand* snake_head.getWidth()));
+            y1.add( height-(rand* snake_head.getHeight()));
+        } else if ( rand2 < 4) {
+            x1.add( width+(rand* snake_head.getWidth()));
+            y1.add( height-(rand* snake_head.getHeight()));
+        } else if (rand2 < 6) {
+            x1.add( width+(rand* snake_head.getWidth()));
+            y1.add( height+(rand* snake_head.getHeight()));
+        } else {
+            x1.add( width+(rand* snake_head.getWidth()));
+            y1.add( height+(rand* snake_head.getHeight()));
+        }
     }
 
     public static int random(){
         int rand = (int) (Math.random()*9+1);
         return rand;
+    }
+
+    public void fruitpos(){
+        int rand = random();
+        int rand2 = random()-2;
+
+        if (rand2 < 2){
+            x2 = (int) (width-(rand* snake_head.getWidth()));
+            y2 = (int) (height-(rand* snake_head.getHeight()));
+        } else if ( rand2 < 4) {
+            x2 = (int) (width+(rand* snake_head.getWidth()));
+            y2 = (int) (height-(rand* snake_head.getHeight()));
+        } else if (rand2 < 6) {
+            x2 = (int) (width+(rand* snake_head.getWidth()));
+            y2 = (int) (height+(rand* snake_head.getHeight()));
+        } else {
+            x2 = (int) (width+(rand* snake_head.getWidth()));
+            y2 = (int) (height+(rand* snake_head.getHeight()));
+        }
+
+        for (int i = 0; i < x1.size()-1; i++){
+            if (x1.get(i) == x2 && y1.get(i) == y2){
+                fruitpos();
+            }
+        }
+    }
+
+    public void snakecrash() {
+        for (int i = 1; i < x1.size()-1; i++){
+            System.out.println(x1.get(0) + " " + y1.get(0) + "    " + x1.get(i) + " " + y1.get(i));
+            if (x1.get(0) == x1.get(i) && y1.get(0) == y1.get(i)){
+                JOptionPane.showMessageDialog(null,"You lost");
+                stop();
+            }
+        }
     }
 }
 

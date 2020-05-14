@@ -6,7 +6,7 @@
  */
 public class Main {
     public static void main(String[] args) {
-        Graphics graphics = new Graphics(400,250,3);
+        Graphics graphics = new Graphics(800,800,1);
         graphics.start();
     }
 }
