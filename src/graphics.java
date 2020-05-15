@@ -68,10 +68,7 @@ public class Graphics extends Canvas implements Runnable {
         snake_body = new Sprite(16,16,0x00FF00);
 
 
-        int rand = random();
-
-        x2 = (int) (width-(rand* snake_head.getWidth()));
-        y2 = (int) (height-(rand* snake_head.getHeight()));
+        fruitpos();
     }
 
     private void draw() {
@@ -127,10 +124,8 @@ public class Graphics extends Canvas implements Runnable {
 
 
         if (length >= 2) {
-            System.out.println(x1.size());
             int size = x1.size();
             for (int i = x1.size()-1; i >= 1; i--){
-                System.out.println(i);
                     x1.set(i, x1.get(i-1));
                     y1.set(i, y1.get(i-1));
 
@@ -249,8 +244,8 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     public void spawn(){
-        int rand = random();
-        int rand2 = random()-2;
+        int rand = random(25);
+        int rand2 = random(9)-2;
 
         if (rand2 < 2){
             x1.add( width-(rand* snake_head.getWidth()));
@@ -267,27 +262,27 @@ public class Graphics extends Canvas implements Runnable {
         }
     }
 
-    public static int random(){
-        int rand = (int) (Math.random()*9+1);
+    public static int random(int i){
+        int rand = (int) (Math.random()*i+1);
         return rand;
     }
 
     public void fruitpos(){
-        int rand = random();
-        int rand2 = random()-2;
+        int rand = random(25);
+        int rand2 = random(9)-2;
 
         if (rand2 < 2){
-            x2 = (int) (width-(rand* snake_head.getWidth()));
-            y2 = (int) (height-(rand* snake_head.getHeight()));
+            x2 = (int) ((width/2)-(rand* snake_head.getWidth()));
+            y2 = (int) ((height/2)-(rand* snake_head.getHeight()));
         } else if ( rand2 < 4) {
-            x2 = (int) (width+(rand* snake_head.getWidth()));
-            y2 = (int) (height-(rand* snake_head.getHeight()));
+            x2 = (int) ((width/2)+(rand* snake_head.getWidth()));
+            y2 = (int) ((height/2)-(rand* snake_head.getHeight()));
         } else if (rand2 < 6) {
-            x2 = (int) (width+(rand* snake_head.getWidth()));
-            y2 = (int) (height+(rand* snake_head.getHeight()));
+            x2 = (int) ((width/2)+(rand* snake_head.getWidth()));
+            y2 = (int) ((height/2)+(rand* snake_head.getHeight()));
         } else {
-            x2 = (int) (width+(rand* snake_head.getWidth()));
-            y2 = (int) (height+(rand* snake_head.getHeight()));
+            x2 = (int) ((width/2)+(rand* snake_head.getWidth()));
+            y2 = (int) ((height/2)+(rand* snake_head.getHeight()));
         }
 
         for (int i = 0; i < x1.size()-1; i++){
@@ -298,13 +293,14 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     public void snakecrash() {
-        for (int i = 1; i < x1.size()-1; i++){
-            System.out.println(x1.get(0) + " " + y1.get(0) + "    " + x1.get(i) + " " + y1.get(i));
+        for (int i = 1; i <= x1.size()-1; i++){
+            System.out.println(x1.get(0) + " " + y1.get(0) + "           " + x1.get(i) + " " + y1.get(i));
             if (x1.get(0) == x1.get(i) && y1.get(0) == y1.get(i)){
                 JOptionPane.showMessageDialog(null,"You lost");
                 stop();
             }
         }
+        System.out.println();
     }
 }
 

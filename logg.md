@@ -9,3 +9,4 @@
 8/5 - 20; Idag har fortsatt jobba med hur kroppen ska kunna röra sig. Det jag har nu kommit på är att kroppen kordinater kommer att vara den delen innans tidigare kordinater.
 
 14/5 - 20; Idag har jag jobbat på att frukten inte ska kunna spawna där ormen är. Jag har även börjat jobba på att man ska förlora om ormen kommer att röra sig själv men har inte riktigt fått koll på det än.
+
