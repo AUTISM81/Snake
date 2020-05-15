@@ -10,3 +10,4 @@
 
 14/5 - 20; Idag har jag jobbat på att frukten inte ska kunna spawna där ormen är. Jag har även börjat jobba på att man ska förlora om ormen kommer att röra sig själv men har inte riktigt fått koll på det än.
 
+15/5 - 20; Idag har jag jobbat på att få satt ormen kommer att kunna krocka in i varandra för att sedan förlora. Jag har även fixat så att alla spawns kan vara över hela kartan. Jag har även börjat på att fixa så att ormen inte ska kunna fara utanför kartan och att den ska förlora om den skulle göra det. 

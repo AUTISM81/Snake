@@ -90,14 +90,6 @@ public class Graphics extends Canvas implements Runnable {
         }
 
         length = x1.size();
-        // The mario sprite
-
-        /* Parametric curve (a circle) see https://en.wikipedia.org/wiki/Parametric_equation
-           t controls the coordinates as (x(t),y(t)). Here t is increased by 2 degrees (pi/180 rad)
-           each timestep.
-        */
-
-
 
         if (x2 == x1.get(0) && y2 == y1.get(0)) {
             fruitpos();
@@ -165,6 +157,7 @@ public class Graphics extends Canvas implements Runnable {
         }
 
         snakecrash();
+        outOfBounds();
     }
 
     public synchronized void start() {
@@ -216,6 +209,7 @@ public class Graphics extends Canvas implements Runnable {
 
         }
 
+        //the controls for the snakes
         @Override
         public void keyPressed(KeyEvent keyEvent) {
             if (keyEvent.getKeyChar()=='a') {
@@ -251,6 +245,7 @@ public class Graphics extends Canvas implements Runnable {
         }
     }
 
+    //the random spawn for the snake
     public void spawn(){
         int rand = random(24);
         int rand2 = random(9)-2;
@@ -270,11 +265,13 @@ public class Graphics extends Canvas implements Runnable {
         }
     }
 
+    //so that you can generate random ints with from 1 to a certain number
     public static int random(int i){
         int rand = (int) (Math.random()*i+1);
         return rand;
     }
 
+    //random position for the fruit for when it is eaten and the spawn
     public void fruitpos(){
         int rand = random(24);
         int rand2 = random(9)-2;
@@ -293,6 +290,7 @@ public class Graphics extends Canvas implements Runnable {
             y2 = (int) ((height/2)+(rand* snake_head.getHeight()));
         }
 
+        //checks if the fruit has spawned on  the snake and if it has it gets a new random position
         for (int i = 0; i < x1.size()-1; i++){
             if (x1.get(i) == x2 && y1.get(i) == y2){
                 fruitpos();
@@ -300,17 +298,29 @@ public class Graphics extends Canvas implements Runnable {
         }
     }
 
+    //so that the snake can crash into itself it will lose
     public void snakecrash() {
         for (int i = 1; i <= x1.size()-1; i++){
-            System.out.println(x1.get(0) + " " + y1.get(0) + "           " + x1.get(i) + " " + y1.get(i));
             if (x1.get(0).equals(x1.get(i)) && y1.get(0).equals(y1.get(i))){
                 System.out.println("im here");
                 lose();
             }
         }
-        System.out.println();
     }
 
+    //checks if the snakes head is out of the frame it has and if it is it will lose (currently in progress)
+    public void outOfBounds() {
+        System.out.println(x1.get(0) + "  " + y1.get(0));
+        if (x1.get(0) > width || x1.get(0) < 0) {
+            lose();
+        }
+
+        if (y1.get(0) > height || y1.get(0) < 0) {
+            lose();
+        }
+    }
+
+    //runs this if you somehow have lost the game
     public void lose() {
         JOptionPane.showMessageDialog(null,"You lost");
         running = false;
