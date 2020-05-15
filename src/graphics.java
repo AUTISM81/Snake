@@ -219,17 +219,25 @@ public class Graphics extends Canvas implements Runnable {
         @Override
         public void keyPressed(KeyEvent keyEvent) {
             if (keyEvent.getKeyChar()=='a') {
-                vx = -snake_head.getWidth();
-                vy = 0;
+                if (vx == 0) {
+                    vx = -snake_head.getWidth();
+                    vy = 0;
+                }
             } else if (keyEvent.getKeyChar()=='d') {
-                vx = snake_head.getWidth();
-                vy = 0;
+                if (vx == 0) {
+                    vx = snake_head.getWidth();
+                    vy = 0;
+                }
             } else if (keyEvent.getKeyChar()=='w') {
-                vy = -snake_head.getHeight();
-                vx = 0;
+                if (vy == 0) {
+                    vy = -snake_head.getHeight();
+                    vx = 0;
+                }
             } else if (keyEvent.getKeyChar()=='s') {
-                vy = snake_head.getHeight();
-                vx = 0;
+                if (vy == 0) {
+                    vy = snake_head.getHeight();
+                    vx = 0;
+                }
             }
         }
 
@@ -244,7 +252,7 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     public void spawn(){
-        int rand = random(25);
+        int rand = random(24);
         int rand2 = random(9)-2;
 
         if (rand2 < 2){
@@ -268,7 +276,7 @@ public class Graphics extends Canvas implements Runnable {
     }
 
     public void fruitpos(){
-        int rand = random(25);
+        int rand = random(24);
         int rand2 = random(9)-2;
 
         if (rand2 < 2){
@@ -295,12 +303,17 @@ public class Graphics extends Canvas implements Runnable {
     public void snakecrash() {
         for (int i = 1; i <= x1.size()-1; i++){
             System.out.println(x1.get(0) + " " + y1.get(0) + "           " + x1.get(i) + " " + y1.get(i));
-            if (x1.get(0) == x1.get(i) && y1.get(0) == y1.get(i)){
-                JOptionPane.showMessageDialog(null,"You lost");
-                stop();
+            if (x1.get(0).equals(x1.get(i)) && y1.get(0).equals(y1.get(i))){
+                System.out.println("im here");
+                lose();
             }
         }
         System.out.println();
+    }
+
+    public void lose() {
+        JOptionPane.showMessageDialog(null,"You lost");
+        running = false;
     }
 }
 
