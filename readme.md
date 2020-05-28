@@ -18,4 +18,4 @@ TODO
 10. Add a scoreboard
 11. Make a multiplayer mode. 
 
-[Länk till PostMortem](https://github.com/AUTISM81/Snake/wiki)
+[Länk till PostMortem](https://github.com/AUTISM81/Snake/wiki/Post-Mortem)
