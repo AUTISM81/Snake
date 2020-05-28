@@ -18,6 +18,7 @@ public class Graphics extends Canvas implements Runnable {
     private int width;
     private int height;
 
+    //initating the variables
     int vx = 0;
     int vy = 0;
     ArrayList <Integer> x1 = new ArrayList<Integer>(10);
@@ -91,6 +92,7 @@ public class Graphics extends Canvas implements Runnable {
 
         length = x1.size();
 
+        //checks if the head of the snake is on the frut so that the snake  can get longer and that the fruit will get a new position.
         if (x2 == x1.get(0) && y2 == y1.get(0)) {
             fruitpos();
 
@@ -100,6 +102,7 @@ public class Graphics extends Canvas implements Runnable {
             y1.add(y1.get(0));
         }
 
+        //checks if the furits spawns on itself and ifso it will get a new position.
         while (x2 >= width- Fruit.getWidth() ||  x2 <= 0){
             fruitpos();
         }
@@ -107,6 +110,8 @@ public class Graphics extends Canvas implements Runnable {
             fruitpos();
         }
 
+
+        //prints out the frut on the screen.
         for (int i = 0; i < Fruit.getHeight(); i++) {
             for (int j = 0; j < Fruit.getWidth(); j++) {
                 pixels[(y2 + i) * width + x2 + j] = Fruit.getPixels()[i * Fruit.getWidth() + j];
@@ -115,6 +120,7 @@ public class Graphics extends Canvas implements Runnable {
 
 
 
+        //prints out the whole length of the snake.
         if (length >= 2) {
             int size = x1.size();
             for (int i = x1.size()-1; i >= 1; i--){
@@ -135,13 +141,6 @@ public class Graphics extends Canvas implements Runnable {
         x1.set(0, x1.get(0) +vx);
         y1.set(0, y1.get(0) +vy);
 
-        if (x1.get(0) >= width ||  x1.get(0) == 0) {
-            stop();
-        }
-        if (y1.get(0) >= height || y1.get(0) == 0){
-            stop();
-        }
-
         if (vy == 0) {
             for (int i = 0; i < snake_head.getHeight(); i++) {
                 for (int j = 0; j < snake_head.getWidth(); j++) {
@@ -156,6 +155,7 @@ public class Graphics extends Canvas implements Runnable {
             }
         }
 
+        //checks in the end of each update if the snake has crashed into itself or it is out of bounds.
         snakecrash();
         outOfBounds();
     }
@@ -302,7 +302,6 @@ public class Graphics extends Canvas implements Runnable {
     public void snakecrash() {
         for (int i = 1; i <= x1.size()-1; i++){
             if (x1.get(0).equals(x1.get(i)) && y1.get(0).equals(y1.get(i))){
-                System.out.println("im here");
                 lose();
             }
         }
@@ -310,12 +309,13 @@ public class Graphics extends Canvas implements Runnable {
 
     //checks if the snakes head is out of the frame it has and if it is it will lose (currently in progress)
     public void outOfBounds() {
-        System.out.println(x1.get(0) + "  " + y1.get(0));
         if (x1.get(0) > width || x1.get(0) < 0) {
+            JOptionPane.showMessageDialog(null,"You are out of bounds!");
             lose();
         }
 
         if (y1.get(0) > height || y1.get(0) < 0) {
+            JOptionPane.showMessageDialog(null,"You are out of bounds!");
             lose();
         }
     }
